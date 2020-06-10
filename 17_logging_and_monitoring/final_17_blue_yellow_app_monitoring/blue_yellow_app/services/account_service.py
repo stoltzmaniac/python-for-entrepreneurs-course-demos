@@ -23,23 +23,20 @@ class AccountService:
     @classmethod
     def find_account_by_email(cls, email):
 
-        if not email or not email.strip():
+        if not (email and email.strip()):
             return None
 
         email = email.lower().strip()
 
         session = DbSessionFactory.create_session()
 
-        account = session.query(Account) \
+        return session.query(Account) \
             .filter(Account.email == email) \
             .first()
 
-        return account
-
     @staticmethod
     def hash_text(plain_text_password):
-        hashed_text = sha512_crypt.encrypt(plain_text_password, rounds=150000)
-        return hashed_text
+        return sha512_crypt.encrypt(plain_text_password, rounds=150000)
 
     @classmethod
     def get_authenticated_account(cls, email, plain_text_password):
@@ -61,11 +58,9 @@ class AccountService:
 
         session = DbSessionFactory.create_session()
 
-        account = session.query(Account) \
+        return session.query(Account) \
             .filter(Account.id == user_id) \
             .first()
-
-        return account
 
     @staticmethod
     def create_reset_code(email):
@@ -88,15 +83,13 @@ class AccountService:
     @classmethod
     def find_reset_code(cls, code):
 
-        if not code or not code.strip():
+        if not (code and code.strip()):
             return None
 
         session = DbSessionFactory.create_session()
-        reset = session.query(PasswordReset).\
+        return session.query(PasswordReset).\
             filter(PasswordReset.id == code).\
             first()
-
-        return reset
 
     @classmethod
     def use_reset_code(cls, reset_code, user_ip):

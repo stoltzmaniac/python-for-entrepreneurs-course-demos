@@ -27,7 +27,7 @@ class BaseController:
 
     @property
     def data_dict(self):
-        data = dict()
+        data = {}
         data.update(self.request.GET)
         data.update(self.request.POST)
         data.update(self.request.matchdict)

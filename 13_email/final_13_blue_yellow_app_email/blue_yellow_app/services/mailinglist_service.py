@@ -20,7 +20,7 @@ class MailingListService:
 
         api = mailchimp.Mailchimp(apikey=MailingListService.mailchimp_api)
 
-        if not email or not email.strip():
+        if not (email and email.strip()):
             return False
 
         try:

@@ -20,23 +20,20 @@ class AccountService:
     @classmethod
     def find_account_by_email(cls, email):
 
-        if not email or not email.strip():
+        if not (email and email.strip()):
             return None
 
         email = email.lower().strip()
 
         session = DbSessionFactory.create_session()
 
-        account = session.query(Account) \
+        return session.query(Account) \
             .filter(Account.email == email) \
             .first()
 
-        return account
-
     @staticmethod
     def hash_text(plain_text_password):
-        hashed_text = sha512_crypt.encrypt(plain_text_password, rounds=150000)
-        return hashed_text
+        return sha512_crypt.encrypt(plain_text_password, rounds=150000)
 
     @classmethod
     def get_authenticated_account(cls, email, plain_text_password):
@@ -56,8 +53,6 @@ class AccountService:
 
         session = DbSessionFactory.create_session()
 
-        account = session.query(Account) \
+        return session.query(Account) \
             .filter(Account.id == user_id) \
             .first()
-
-        return account

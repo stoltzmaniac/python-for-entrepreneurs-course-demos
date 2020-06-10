@@ -15,11 +15,9 @@ class CreditCardProcessor:
         price_in_cents = int(round(price_in_usd * 100, 10))
 
         stripe.api_key = CreditCardProcessor.__stripe_api_key
-        charge = stripe.Charge.create(
+        return stripe.Charge.create(
             amount=price_in_cents,
             currency='USD',
             source=stripe_token,
             description=desc
         )
-
-        return charge

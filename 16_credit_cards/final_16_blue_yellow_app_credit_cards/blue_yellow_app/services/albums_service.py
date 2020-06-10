@@ -10,13 +10,11 @@ class AlbumsService:
     def get_albums():
         session = DbSessionFactory.create_session()
 
-        albums = session.query(Album) \
+        return session.query(Album) \
             .options(joinedload('tracks')) \
             .filter(Album.is_published) \
             .order_by(Album.year.desc()) \
             .all()
-
-        return albums
 
     @staticmethod
     def old_get_albums():

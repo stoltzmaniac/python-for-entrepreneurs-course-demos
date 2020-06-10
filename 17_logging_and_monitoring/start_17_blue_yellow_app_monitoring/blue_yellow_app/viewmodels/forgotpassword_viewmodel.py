@@ -11,6 +11,6 @@ class ForgotPasswordViewModel(ViewModelBase):
 
     def validate(self):
         self.error = None
-        if not self.email or not self.email.strip():
+        if not (self.email and self.email.strip()):
             self.error = "You must specify an email address"
             return

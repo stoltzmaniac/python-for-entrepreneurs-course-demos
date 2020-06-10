@@ -17,7 +17,7 @@ class DbSessionFactory:
         if DbSessionFactory.factory:
             return
 
-        if not db_file or not db_file.strip():
+        if not (db_file and db_file.strip()):
             raise Exception("You must specify a data file.")
 
         conn_str = 'sqlite:///' + db_file
